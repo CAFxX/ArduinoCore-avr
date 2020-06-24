@@ -111,7 +111,7 @@ void _analogWrite(uint8_t pin, int val)
 	_analogWrite_inline(pin, val);
 }
 
-void _analogWrite_inline(uint8_t pin, int val) __attribute__((__always_inline__)) 
+inline void _analogWrite_inline(uint8_t pin, int val) __attribute__((__always_inline__)) 
 {
 	// We need to make sure the PWM output is enabled for those pins
 	// that support it, as we turn it off when digitally reading or
