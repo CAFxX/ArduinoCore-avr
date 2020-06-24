@@ -41,7 +41,7 @@ extern "C"{
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
-#define turnOffPWM(timer)
+#define turnOffPWM(timer) \
 	( __builtin_constant_p(timer) ? _turnOffPWM_inline(timer) : _turnOffPWM(timer) )
 
 uint32_t countPulseASM(volatile uint8_t *port, uint8_t bit, uint8_t stateMask, unsigned long maxloops);
