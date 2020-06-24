@@ -131,9 +131,13 @@ void initVariant(void);
 
 int atexit(void (*func)()) __attribute__((weak));
 
-void pinMode(uint8_t pin, uint8_t mode);
-void digitalWrite(uint8_t pin, uint8_t val);
-int digitalRead(uint8_t pin);
+#define pinMode(pin, mode) \
+	( (__builtin_constant_p(pin) || __builtin_constant_p(mode)) ? _pinMode_inline((pin), (mode)) : _pinMode((pin), (mode)) )
+#define digitalWrite(pin, val) \
+	( __builtin_constant_p(pin) ? _digitalWrite_inline((pin), (val)) : _digitalWrite((pin), (val)) )
+#define digitalRead(pin) \
+	( __builtin_constant_p(pin) ? _digitalRead_inline(pin) : _digitalRead(pin) )
+
 int analogRead(uint8_t pin);
 void analogReference(uint8_t mode);
 void analogWrite(uint8_t pin, int val);
