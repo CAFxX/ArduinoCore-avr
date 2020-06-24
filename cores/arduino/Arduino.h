@@ -131,6 +131,8 @@ void initVariant(void);
 
 int atexit(void (*func)()) __attribute__((weak));
 
+void analogReference(uint8_t mode);	
+
 #define pinMode(pin, mode) \
 	( (__builtin_constant_p(pin) || __builtin_constant_p(mode)) ? _pinMode_inline((pin), (mode)) : _pinMode((pin), (mode)) )
 #define digitalWrite(pin, val) \
@@ -142,8 +144,17 @@ int atexit(void (*func)()) __attribute__((weak));
 #define analogRead(pin) \
 	( __builtin_constant_p(pin) ? _analogRead_inline(pin) : _analogRead(pin) )
 
-void analogReference(uint8_t mode);	
-
+inline void _pinMode_inline(uint8_t pin, uint8_t mode) __attribute__ ((always_inline));
+inline void _digitalWrite_inline(uint8_t pin, uint8_t val) __attribute__ ((always_inline));
+inline int _digitalRead_inline(uint8_t pin) __attribute__ ((always_inline));
+inline void _analogWrite_inline(uint8_t pin, int val) __attribute__ ((always_inline));
+inline int _analogRead_inline(uint8_t pin) __attribute__ ((always_inline));
+void _pinMode(uint8_t pin, uint8_t mode);
+void _digitalWrite(uint8_t pin, uint8_t val);
+int _digitalRead(uint8_t pin);
+void _analogWrite(uint8_t pin, int val);
+int _analogRead(uint8_t pin);
+	
 unsigned long millis(void);
 unsigned long micros(void);
 void delay(unsigned long ms);
