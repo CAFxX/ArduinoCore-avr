@@ -137,10 +137,12 @@ int atexit(void (*func)()) __attribute__((weak));
 	( __builtin_constant_p(pin) ? _digitalWrite_inline((pin), (val)) : _digitalWrite((pin), (val)) )
 #define digitalRead(pin) \
 	( __builtin_constant_p(pin) ? _digitalRead_inline(pin) : _digitalRead(pin) )
+#define analogWrite(pin, val) \
+	( __builtin_constant_p(pin) ? _analogWrite_inline((pin), (val)) : _analogWrite((pin), (val)) )
+#define analogRead(pin) \
+	( __builtin_constant_p(pin) ? _analogRead_inline(pin) : _analogRead(pin) )
 
-int analogRead(uint8_t pin);
-void analogReference(uint8_t mode);
-void analogWrite(uint8_t pin, int val);
+void analogReference(uint8_t mode);	
 
 unsigned long millis(void);
 unsigned long micros(void);
