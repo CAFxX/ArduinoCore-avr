@@ -26,7 +26,12 @@
 #include "wiring_private.h"
 #include "pins_arduino.h"
 
-void pinMode(uint8_t pin, uint8_t mode)
+void _pinMode(uint8_t pin, uint8_t mode)
+{
+	_pinMode_inline(pin, mode);
+}
+
+inline void _pinMode_inline(uint8_t pin, uint8_t mode) __attribute__((__always_inline__)) 
 {
 	uint8_t bit = digitalPinToBitMask(pin);
 	uint8_t port = digitalPinToPort(pin);
@@ -72,7 +77,12 @@ void pinMode(uint8_t pin, uint8_t mode)
 //
 //static inline void turnOffPWM(uint8_t timer) __attribute__ ((always_inline));
 //static inline void turnOffPWM(uint8_t timer)
-static void turnOffPWM(uint8_t timer)
+static void _turnOffPWM(uint8_t timer)
+{
+	_turnOffPWM_inline(timer);
+}
+
+static inline void _turnOffPWM_inline(uint8_t timer) __attribute__ ((always_inline))
 {
 	switch (timer)
 	{
@@ -135,7 +145,12 @@ static void turnOffPWM(uint8_t timer)
 	}
 }
 
-void digitalWrite(uint8_t pin, uint8_t val)
+void _digitalWrite(uint8_t pin, uint8_t val)
+{
+	_digitalWrite_inline(pin, val);
+}
+
+inline void _digitalWrite_inline(uint8_t pin, uint8_t val) __attribute__((__always_inline__))
 {
 	uint8_t timer = digitalPinToTimer(pin);
 	uint8_t bit = digitalPinToBitMask(pin);
@@ -162,7 +177,12 @@ void digitalWrite(uint8_t pin, uint8_t val)
 	SREG = oldSREG;
 }
 
-int digitalRead(uint8_t pin)
+int _digitalRead(uint8_t pin)
+{
+	return _digitalRead_inline(pin);
+}
+
+int _digitalRead_inline(uint8_t pin) __attribute__((__always_inline__))
 {
 	uint8_t timer = digitalPinToTimer(pin);
 	uint8_t bit = digitalPinToBitMask(pin);
